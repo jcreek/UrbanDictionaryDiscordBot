@@ -1,6 +1,8 @@
-FROM node:12
+FROM node:14-alpine
+ENV NODE_ENV=production
 
 # Create app directory
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app dependencies
@@ -12,8 +14,8 @@ RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
 
-# Bundle app source
-COPY . .
+# Copy the bot itself
+COPY . /usr/src/app
 
-EXPOSE 8080
-CMD [ "node", "index.js" ]
+# Start the bot
+CMD ["node", "index.js"]
